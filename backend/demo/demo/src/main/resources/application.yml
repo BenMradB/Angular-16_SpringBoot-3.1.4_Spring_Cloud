@@ -1,0 +1,14 @@
+server:
+  port: 8080
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: bolbolpubg2001@gmail.com
+    password: sofn eqel tiij resz
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

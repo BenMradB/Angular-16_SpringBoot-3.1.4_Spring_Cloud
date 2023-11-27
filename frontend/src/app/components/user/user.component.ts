@@ -28,16 +28,17 @@ export class UserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getUsers();
-    this.getRoles();
-    this.isAdmin = this.authService.isAdmin();
-    this.authService.loadToken();
     if (
       this.authService.getToken() === null ||
-      this.authService.isTokenExpired()
+      this.authService.isTokenExpired() ||
+      !!!localStorage.getItem('verifiedLogin')
     ) {
       this.router.navigate(['/login']);
     } else {
+      this.getUsers();
+      this.getRoles();
+      this.isAdmin = this.authService.isAdmin();
+      this.authService.loadToken();
       this.router.navigate(['/users']);
     }
   }

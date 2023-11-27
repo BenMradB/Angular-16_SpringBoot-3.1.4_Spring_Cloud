@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/register/**").permitAll()
-//                .requestMatchers("/register/verify/**").permitAll()
+                .requestMatchers("/api/users/get/email/**").permitAll()
                 .requestMatchers("/login").permitAll()
 
                 .requestMatchers("/api/teachers/all/**").hasAnyAuthority("ADMIN", "USER")
@@ -119,8 +119,8 @@ public class SecurityConfig {
                         new JWTAuthorizationFilter(),
                         UsernamePasswordAuthenticationFilter.class
                 )
-                .formLogin()
-                .and()
+//                .formLogin()
+//                .and()
                 .build();
     }
 }

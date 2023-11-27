@@ -24,31 +24,31 @@ export class LoginComponent implements OnInit {
 
   public onLoggedIn(user: User) {
     this.user = user;
-    this.authService.login(this.user).subscribe({
-      next: (data) => {
-        let jwtToken = data.headers.get('Authorization')!;
-        this.authService.saveToken(jwtToken);
-        // this.userService
-        //   .getUserByEmail(this.authService.decodeJWT().sub)
-        //   .subscribe({
-        //     next: (user: User) => {
-        //       if (!user.isEnabled) {
-        //         this.err = 'Account disabled';
-        //         this.router.navigate(['/login']);
-        //         return;
-        //       }
-        //       localStorage.setItem('isEnabled', 'true');
-        //       this.router.navigate(['/']);
-        //     },
-        //     error: (err: any) => {
-        //       console.log(err);
-        //     },
-        //   });
-        this.router.navigate(['/']);
+    this.userService.getUserByEmail(user.username).subscribe({
+      next: (_user: User) => {
+        if (!_user.isEnabled) {
+          this.err =
+            'Account may not be enabled. verify your email inbox you may find a verification mail';
+          return;
+        }
+
+        this.authService.login(this.user).subscribe({
+          next: (data) => {
+            let jwtToken = data.headers.get('Authorization')!;
+            this.authService.saveToken(jwtToken);
+            localStorage.setItem('verifiedLogin', 'true');
+            localStorage.setItem('loggedUser', user.username);
+            this.router.navigate(['/']);
+          },
+          error: (err: any) => {
+            console.log(err);
+            this.err = 'Wrong email or password';
+          },
+        });
       },
       error: (err: any) => {
         console.log(err);
-        this.err = 'Wrong email or password';
+        this.err = err.message;
       },
     });
   }

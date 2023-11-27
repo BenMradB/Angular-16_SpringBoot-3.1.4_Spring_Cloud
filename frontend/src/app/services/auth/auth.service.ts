@@ -34,7 +34,6 @@ export class AuthService {
 
   saveToken(jwt: string) {
     localStorage.setItem('jwt', jwt);
-    // localStorage.setItem('isEnabled', 'false');
     this.token = jwt;
     this.isLoggedIn = true;
     this.decodeJWT();
@@ -67,45 +66,12 @@ export class AuthService {
     this.token = undefined!;
     this.isLoggedIn = false;
     localStorage.removeItem('jwt');
+    localStorage.removeItem('verifiedLogin');
+    localStorage.removeItem('loggedUser');
     this.router.navigate(['/login']);
   }
 
   isTokenExpired(): Boolean {
     return this.helper.isTokenExpired(this.token);
   }
-
-  // public users: User[] = [
-  //   {
-  //     email: "admin",
-  //     password: "123",
-  //     roles: [
-  //       "admin"
-  //     ]
-  //   },
-  //   {
-  //     email: "bilel",
-  //     password: "123456",
-  //     roles: [
-  //       "user"
-  //     ]
-  //   },
-  // ]
-
-  // signIn(user: User): Boolean {
-  //   const filteredUser = this.users.filter(ele => ele.email === user.email)[0];
-
-  //   if (!filteredUser) return false;
-
-  //   if (filteredUser.password !== user.password) return false;
-
-  //   this.roles = filteredUser.roles;
-
-  //   localStorage.setItem('user', filteredUser.email);
-
-  //   localStorage.setItem('isLoggedIn', 'true')
-
-  //   localStorage.setItem('isAdmin', `${this.roles.includes('admin')}`)
-
-  //   return true;
-  // }d
 }

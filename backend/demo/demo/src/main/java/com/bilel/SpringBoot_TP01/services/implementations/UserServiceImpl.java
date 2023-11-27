@@ -80,6 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void enableUser(User user) {
+        user.setIsEnabled(true);
         userRepo.save(user);
     }
 }

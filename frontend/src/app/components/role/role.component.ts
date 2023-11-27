@@ -24,15 +24,16 @@ export class RoleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getRoles();
-    this.isAdmin = this.authService.isAdmin();
-    this.authService.loadToken();
     if (
       this.authService.getToken() === null ||
-      this.authService.isTokenExpired()
+      this.authService.isTokenExpired() ||
+      !!!localStorage.getItem('verifiedLogin')
     ) {
       this.router.navigate(['/login']);
     } else {
+      this.getRoles();
+      this.isAdmin = this.authService.isAdmin();
+      this.authService.loadToken();
       this.router.navigate(['/roles']);
     }
   }

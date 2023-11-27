@@ -32,16 +32,16 @@ export class TeacherComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.getTeachers();
-    this.isAdmin = this.authService.isAdmin();
-
-    this.authService.loadToken();
     if (
       this.authService.getToken() === null ||
-      this.authService.isTokenExpired()
+      this.authService.isTokenExpired() ||
+      !!!localStorage.getItem('verifiedLogin')
     ) {
       this.router.navigate(['/login']);
     } else {
+      this.getTeachers();
+      this.isAdmin = this.authService.isAdmin();
+      this.authService.loadToken();
       this.router.navigate(['/teachers']);
     }
   }

@@ -26,16 +26,17 @@ export class SpecialityComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getSpecialities();
-    this.isAdmin = this.authService.isAdmin();
-
-    this.authService.loadToken();
     if (
       this.authService.getToken() === null ||
-      this.authService.isTokenExpired()
+      this.authService.isTokenExpired() ||
+      !!!localStorage.getItem('verifiedLogin')
     ) {
       this.router.navigate(['/login']);
     } else {
+      this.getSpecialities();
+      this.isAdmin = this.authService.isAdmin();
+
+      this.authService.loadToken();
       this.router.navigate(['/specialities']);
     }
   }

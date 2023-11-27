@@ -17,6 +17,11 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
+    public void deleteToken(Long tokenId) {
+        tokenRepo.deleteById(tokenId);
+    }
+
+    @Override
     public void saveUserVerificationToken(User user, String verificationToken) {
         Token token = new Token(verificationToken, user);
         tokenRepo.save(token);

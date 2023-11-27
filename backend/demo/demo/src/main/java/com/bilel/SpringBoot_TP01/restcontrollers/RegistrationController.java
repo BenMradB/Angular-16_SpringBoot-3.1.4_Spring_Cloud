@@ -42,6 +42,16 @@ public class RegistrationController {
 
     @GetMapping("/verify")
     public String verify(@RequestParam String token) {
-        return "Hello World" + token;
+        Token _token = tokenService.getToken(token);
+
+        if (_token.getUser().getIsEnabled()) {
+            return "This account has already been verified . just you need to login.";
+        }
+
+        userService.enableUser(_token.getUser());
+
+        tokenService.deleteToken(_token.getId());
+
+        return "this account is now verified. you can login";
     }
 }

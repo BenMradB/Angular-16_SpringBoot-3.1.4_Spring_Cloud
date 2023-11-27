@@ -32,17 +32,18 @@ export default class CourseComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.getCourses();
-    this.getTeachers();
-    this.getSpecialities();
-    this.isAdmin = this.authService.isAdmin();
-    this.authService.loadToken();
     if (
       this.authService.getToken() === null ||
-      this.authService.isTokenExpired()
+      this.authService.isTokenExpired() ||
+      !!!localStorage.getItem('verifiedLogin')
     ) {
       this.router.navigate(['/login']);
     } else {
+      this.getCourses();
+      this.getTeachers();
+      this.getSpecialities();
+      this.isAdmin = this.authService.isAdmin();
+      this.authService.loadToken();
       this.router.navigate(['/courses']);
     }
   }

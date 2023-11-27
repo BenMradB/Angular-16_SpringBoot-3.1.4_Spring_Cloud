@@ -1,0 +1,27 @@
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: firstRoute
+#          uri: http://localhost:8080/
+#          predicates:
+#            - Path=/**
+#  application:
+#    name: gateway-service
+#server:
+#  port: 5000
+
+#
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowCredentials: true

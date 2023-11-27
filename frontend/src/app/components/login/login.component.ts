@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
       },
       error: (err: any) => {
         console.log(err);
-        this.err = err.message;
+        this.err = 'Something went very wrong .';
       },
     });
   }
